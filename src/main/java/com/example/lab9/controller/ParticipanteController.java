@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 
 @RestController
-@RequestMapping("/participante")
+@RequestMapping("sdci/participante")
 public class ParticipanteController {
     final ParticipanteRepository participanteRepository;
 
@@ -19,14 +19,19 @@ public class ParticipanteController {
     public ResponseEntity<HashMap<String, Object>> registrarDeporte(
             @RequestBody Participante participante,
             @RequestParam(value = "fetchId", required = false) boolean fetchId) {
-
         HashMap<String, Object> responseJson = new HashMap<>();
 
-        participanteRepository.save(participante);
-        if (fetchId) {
-            responseJson.put("id", participante.getId());
+        try {
+            participanteRepository.save(participante);
+            responseJson.put("estado", "creado");
+            if (fetchId) {
+                responseJson.put("id", participante.getId());
+            }
+            return ResponseEntity.ok(responseJson); // 200 OK en caso de éxito
+        } catch (Exception e) {
+            responseJson.put("error", "Error al registrar el equipo");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson); // Código de error en caso de fallo
         }
-        responseJson.put("estado", "creado");
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseJson);
     }
+
 }

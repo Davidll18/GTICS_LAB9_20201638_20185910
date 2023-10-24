@@ -3,6 +3,7 @@ package com.example.lab9.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import java.text.DecimalFormat;
 
 @Entity
 @Table(name = "participante")
@@ -14,15 +15,15 @@ public class Participante {
     @Column(name = "idparticipante", nullable = false)
     private Integer id;
 
-    @Column(name = "Equipo")
+    @Column(name = "equipo")
     private Integer equipo;
 
-    @Column(name = "Carrera")
+    @Column(name = "carrera")
     private String carrera;
 
-    @Column(name = "Codigo")
-    private String codigo;
+    @Column(name = "codigo")
+    private Double  codigo;
 
     @Column(name = "TipoParticipante")
-    private String tipo;
+    private String tipoParticipante;
 }

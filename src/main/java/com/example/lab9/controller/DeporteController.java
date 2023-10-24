@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 
 @RestController
-@RequestMapping("/deporte")
+@RequestMapping("sdci/deporte")
 public class DeporteController {
     final DeporteRepository deporteRepository;
 
@@ -24,11 +24,16 @@ public class DeporteController {
 
         HashMap<String, Object> responseJson = new HashMap<>();
 
-        deporteRepository.save(deporte);
-        if (fetchId) {
-            responseJson.put("id", deporte.getId());
+        try {
+            deporteRepository.save(deporte);
+            responseJson.put("estado", "creado");
+            if (fetchId) {
+                responseJson.put("id", deporte.getId());
+            }
+            return ResponseEntity.ok(responseJson); // 200 OK en caso de éxito
+        } catch (Exception e) {
+            responseJson.put("error", "Error al registrar el equipo");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson); // Código de error en caso de fallo
         }
-        responseJson.put("estado", "creado");
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseJson);
     }
 }
