@@ -27,10 +27,10 @@ public class ParticipanteController {
             if (fetchId) {
                 responseJson.put("id", participante.getId());
             }
-            return ResponseEntity.ok(responseJson); // 200 OK en caso de éxito
+            return ResponseEntity.ok(responseJson);
         } catch (Exception e) {
-            responseJson.put("error", "Error al registrar el equipo");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson); // Código de error en caso de fallo
+            responseJson.put("error", "Error al registrar");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
         }
     }
 
