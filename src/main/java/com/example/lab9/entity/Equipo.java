@@ -15,10 +15,10 @@ public class Equipo {
     private Integer id;
 
     @Column(name = "nombreEquipo")
-    private String nombre;
+    private String nombreEquipo;
 
     @Column(name = "colorEquipo")
-    private String color;
+    private String colorEquipo;
 
     @Column(name = "mascota")
     private String mascota;
