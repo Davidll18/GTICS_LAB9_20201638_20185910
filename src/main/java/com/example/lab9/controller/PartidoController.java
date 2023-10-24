@@ -1,4 +1,5 @@
 package com.example.lab9.controller;
+import com.example.lab9.entity.HistorialPartido;
 import com.example.lab9.entity.Participante;
 import com.example.lab9.entity.Partido;
 import com.example.lab9.repository.ParticipanteRepository;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("sdci/partido")
@@ -45,6 +47,32 @@ public class PartidoController {
     public List<Participante> listaPartido() {
         return participanteRepository.findAll();
     }
+
+    @GetMapping(value = "/gethistorialpartidos")
+    public  ResponseEntity<HashMap<String, Object>> buscarProducto(@PathVariable("id") String idStr) {
+            HashMap<String, Object> respuesta = new HashMap<>();
+            try {
+                int id = Integer.parseInt(idStr);
+                Optional<Partido> lista = partidoRepository.findById(id);
+
+
+
+                if (lista.isPresent()) {
+                    respuesta.put("result", "ok");
+                    respuesta.put("producto", lista.get());
+                } else {
+                    respuesta.put("result", "no existe");
+                }
+                return ResponseEntity.ok(respuesta);
+            } catch (NumberFormatException e) {
+                respuesta.put("result", "error");
+
+                return ResponseEntity.badRequest().body(respuesta);
+            }
+
+    }
+
+
 
 
 }
